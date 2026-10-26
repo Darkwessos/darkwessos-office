@@ -1,71 +1,44 @@
 ---
-task_id: TASK-005
-title: "Provjera ROOT-LITE Tyrionove alternative"
+task_id: TASK-006
+title: "Priprema dokumentacijske korekcije ROOT-LITE linije 930"
 status: TEST
 updated_at: "2026-10-26"
 source_refs:
   - docs/TASK-005-root-lite-tyrion-review.md
-  - docs/TASK-004-unknown-review.md
+  - docs/TASK-006-root-lite-revision-proposal.md
   - ROOT_LITE.md
   - CURRENT_FULL_ROOT.md
-  - USTAV.md
-  - SOURCE/04_SOURCE_MASTER.md
-  - SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md
 open_questions:
-  - "Odobrava li KENO zaseban dokumentacijski patch za uklanjanje zastarjele ROOT-LITE stavke o Tyrionovoj alternativi?"
-  - "Da li ARCHIVE SOURCE kontejneri trebaju detaljniji inventar sadržaja?"
-next_step: "KENO pregled TASK-005 nalaza TYR-01; tek nakon izričitog odobrenja pripremiti zaseban PR za minimalnu ROOT-LITE korekciju. Ne mergeovati TASK-005 PR."
+  - "Da li TASK-007 primjenjuje odobrenu dokumentacijsku korekciju na ROOT_LITE.md liniju 930?"
+next_step: "TASK-007 — primijeniti odobrenu dokumentacijsku korekciju na ROOT_LITE.md liniju 930."
 canon_status: null
 ---
 
-## Završeni TASK-004
+## KENO odluka
 
-- PR #8 je nakon završne provjere i novog izričitog KENO naloga squash-mergeovan
-  u main kao 621b0ba018286fbeacc5c6e68e2af82c82180e59.
-- Naslov: "TASK-004: klasifikacija UNKNOWN stavki i KENO odluke".
-- Završni diff sadržavao je samo TASK-004 izvještaj i ovaj kontekst.
-  Svih pet odluka imalo je CONFIRMED, odgovarajući final_status, datum
-  2026-10-26, autora KENO i canon_decision: null.
-- Dva SOURCE kontejnera ostaju ARCHIVE, tri pomoćna fajla DOCUMENTATION.
-  ARCHIVE čuva historiju/porijeklo bez novog kanonskog autoriteta.
-- ROOT-LITE Tyrion napomena ostala je REVIEW_REQUIRED.
-- JUG PRIMARY/DUPLICATE odnos sa 1.309 jednakih linija i pojedinačne TEST
-  oznake sačuvani su. SOURCE, ROOT, USTAV i ROOT-LITE nisu mijenjani.
-- Raniji nalog da se PR #8 ne mergeuje odnosio se na tadašnju fazu predaje;
-  novi KENO nalog iz ovog razgovora odobrio je završnu provjeru i merge.
+- Predlog dokumentacijske korekcije je odobren.
+- Stvarna izmjena ROOT_LITE.md još nije izvršena.
+- TASK-007 će primijeniti odobreni tekst.
+- CURRENT_FULL_ROOT.md, USTAV.md i SOURCE građa ostaju netaknuti.
+- Nema novih kanonskih odluka.
 
-## Šta je urađeno u TASK-005
+## Evidencija odluke
 
-- Napravljen je docs/TASK-005-root-lite-tyrion-review.md s nalazom TYR-01:
-  exact_root_lite_quote, exact_current_root_reference, comparison,
-  interpretation, proposed_status, risk, keno_question i recommended_next_step.
-- Pročitani su ROOT-LITE linija 930 i kontekst, cijeli CURRENT §22,
-  povezani §6/HISTORY odjeljci, relevantni SOURCE MASTER i Addendum izvodi
-  te TASK-004 nalaz NAV-01.
-- Potvrđena je ista rečenica u starijem SOURCE ROOT-LITE izvodu;
-  historijski P paket čuva staru konstrukciju zajedničke barijere.
-- CURRENT §22 već superseda naknadni Tyrionov barrier-detour.
-  Današnji ROOT-LITE §13 već prenosi Tywinov nezavisan izbor rute.
-- Predloženo je NEEDS_REVISION za navigacijsku stavku, uz rizik MEDIUM.
-  To je TEST prijedlog, ne prihvaćena KENO odluka ili promjena kanona.
-- keno_decision: PENDING; final_status: null; canon_decision: null.
-- root_lite_review.status ostaje REVIEW_REQUIRED do KENO odluke.
-- Tačne ceste, raskrsnice, Tywinovi izvještaji, dijalog i vrijeme dolazaka
-  ostaju OPEN prema postojećem CURRENT-u.
+- keno_decision: APPROVE
+- final_status: DOCUMENTATION_REVISION_APPROVED
+- decision_date: "2026-10-26"
+- decision_author: KENO
+- risk: MEDIUM
+- canon_decision: null
+- next_action: TASK-007_APPLY_ROOT_LITE_REVISION
+- Tačan odobreni tekst i reference na CURRENT §22.3–§22.5 ostaju u TASK-006 izvještaju.
 
-## Odluke i granice
+## Redoslijed primjene
 
-- KENO je odobrio provjeru i otvaranje PR-a za izvještaj i kontekst.
-- Nije odobrena izmjena ROOT-LITE-a, CURRENT-a, USTAVA ili SOURCE građe.
-- Nema nove kanonske odluke; ROOT-LITE ostaje navigacija.
-- TASK-004 izvještaj i svi izvorni dokumenti ostaju netaknuti.
-- Izmjene TASK-005 obuhvataju samo novi izvještaj i ovaj kontekst.
-- Grana: feature/task-005-root-lite-tyrion-review. Novi PR se ne mergeuje.
-
-## Sljedeći korak
-
-- KENO pregledava TYR-01 i predloženu minimalnu dokumentacijsku korekciju.
-- Preporuka za zaseban budući patch je uklanjanje samo stavke iz ROOT-LITE
-  linije 930, uz očuvanje Frey alternative ekspedicije i OPEN detalja
-  Tyrionove početne rute. Ta izmjena nije izvršena u TASK-005.
-- Ne prelaziti na MCP/Cloudflare prije završetka TASK-005 pregleda.
+- Ovaj korak ažurira samo TASK-006 izvještaj i aktivni kontekst novim commitom u PR-u #10.
+- PR #10 se ne mergeuje ovim korakom; merge izvršava KENO.
+- Tek nakon KENO mergea PR-a #10 priprema se TASK-007 na grani feature/task-007-apply-root-lite-revision.
+- TASK-007 dodaje docs/TASK-007-root-lite-revision-application.md, mijenja samo liniju 930 u ROOT_LITE.md i ažurira ovaj kontekst.
+- TASK-007 bilježi source: TASK-006, keno_decision: APPROVE, decision_date: "2026-10-26", reference: CURRENT_FULL_ROOT.md §22.3–§22.5, change_type: DOCUMENTATION_REVISION i canon_decision: null.
+- TASK-007 ide kroz zaseban Pull Request bez mergea.
+- Nakon pregleda i mergea TASK-007 slijedi TASK-008 — provjera konzistentnosti ROOT-LITE nakon korekcije.
