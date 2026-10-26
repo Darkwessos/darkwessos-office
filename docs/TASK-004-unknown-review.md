@@ -1,7 +1,8 @@
 # TASK-004 — Detaljna provjera UNKNOWN stavki
 
 Datum: 2026-10-26. Status: TEST / NON_CANON. `canon_status: null`.
-Odluke KENO za prijedloge ovog zadatka: PENDING.
+Odluke KENO za radnu klasifikaciju pet fajlova: CONFIRMED, 2026-10-26.
+ROOT-LITE napomena o Tyrionovoj alternativi: REVIEW_REQUIRED za TASK-005.
 
 ## Osnova, rezultat i granice
 
@@ -12,11 +13,13 @@ je uz izričito KENO odobrenje kao commit
 osnova ovog pregleda. [TASK-003](TASK-003-classification.md) potvrđuje pet
 UNKNOWN oznaka, postojeći CANON USTAVA/CURRENT-a i dokumentarni JUG odnos.
 
-Preporuka za KENO: dva historijska SOURCE kontejnera označiti ARCHIVE, a
-tri dokumentacijska fajla DOCUMENTATION. To su **predloženi statusi cijelih
-fajlova**, ne već donesene odluke i ne izmjene statusa pojedinačnih priča,
-LOCK-ova, TEST ideja ili OPEN pitanja. `current_status` ostaje UNKNOWN.
-Nijedan fajl ili novi sadržaj nije predložen za automatski CANON.
+KENO je prihvatio ARCHIVE za dva historijska SOURCE kontejnera i DOCUMENTATION
+za tri dokumentacijska fajla kao **radnu klasifikaciju cijelih fajlova**.
+Potvrde su zapisane ispod s datumom, autorom i `canon_decision: null` za
+svaku stavku. Polazni status iz TASK-003 bio je UNKNOWN; konačna radna
+klasifikacija ovog zadatka je ARCHIVE ili DOCUMENTATION. Pojedinačni
+LOCK, TEST, OPEN i drugi statusi unutar izvora ostaju nepromijenjeni.
+Nema novog kanonskog odobrenja niti promjene ROOT-a.
 
 ARCHIVE ovdje znači čuvanje porijekla i historijskih verzija na postojećoj
 putanji. Ne znači brisanje, premještanje, odbacivanje korisne ideje ili
@@ -33,7 +36,12 @@ historijskim ROOT-LITE izvodom. To nije nezavisna potvrda svake pripovjedne
 tvrdnje svih 73.298 linija SOURCE MASTER-a. Binarni DOCX/PDF i originalni
 master ZIP nisu u pregledanom Git stablu i nisu testirani.
 
-## Pet prijedloga za KENO odluku
+## Početna procjena pet fajlova
+
+Tabela čuva polazni `current_status: UNKNOWN` iz TASK-003 i prvobitne
+prijedloge s dokaznim razlozima. Pitanja u toj tabeli prethodila su odluci;
+KENO ih je razriješio potvrdom radnih uloga. Važeći `final_status` za svaki
+fajl nalazi se u narednom odjeljku. ROOT-LITE sadržajna napomena ostaje otvorena.
 
 `duplicate_of` i `superseded_by` odnose se na cijeli fajl. null znači da nije
 dokazana jednakost ili zamjena cijelog dokumenta. Potvrđena ponavljanja i
@@ -51,6 +59,67 @@ Rizik se odnosi na posljedice pogrešnog korištenja ili buduće klasifikacije.
 HIGH kod SOURCE-a proizlazi iz mogućnosti da se historijski LOCK, CUT ili
 otvorena hipoteza pogrešno prenesu u sadašnji kanon. Predlaganje ARCHIVE ne
 smanjuje niti povećava stvarni autoritet pojedinačne ranije KENO odluke.
+
+## KENO odluka — 2026-10-26
+
+Autor odluke: KENO. [Review komentar u PR-u #8](https://github.com/Darkwessos/darkwessos-office/pull/8#pullrequestreview-5650133635)
+prenosi izričitu odluku iz razgovora; zabilježen je kao COMMENT review.
+
+```yaml
+decisions:
+  - path: "SOURCE/04_SOURCE_MASTER.md"
+    keno_decision: CONFIRMED
+    final_status: ARCHIVE
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    canon_decision: null
+    reason: "Zadržava se kao izvorni kontejner, bez statusa aktivnog kanonskog ROOT-a."
+  - path: "SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md"
+    keno_decision: CONFIRMED
+    final_status: ARCHIVE
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    canon_decision: null
+    reason: "Zadržava se kao izvorni kontejner; JUG PRIMARY/DUPLICATE odnos i pojedinačne TEST oznake blokova ostaju nepromijenjeni."
+  - path: "SOURCE/izvori.md"
+    keno_decision: CONFIRMED
+    final_status: DOCUMENTATION
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    canon_decision: null
+    reason: "Evidencija izvora i referenci, ne novi kanonski sadržaj."
+  - path: "ROOT_LITE.md"
+    keno_decision: CONFIRMED
+    final_status: DOCUMENTATION
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    canon_decision: null
+    reason: "Navigacioni pregled, ne zamjena CURRENT FULL ROOT-a. Tyrionova alternativa ima REVIEW_REQUIRED; zasebna provjera ide u TASK-005."
+  - path: "README.md"
+    keno_decision: CONFIRMED
+    final_status: DOCUMENTATION
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    canon_decision: null
+    reason: "Tehnička dokumentacija repozitorija."
+```
+
+Svih pet uloga je potvrđeno kao radna klasifikacija. ARCHIVE ne znači
+nevažan ili obrisan sadržaj i ne može se automatski tretirati kao CANON.
+ROOT-LITE ostaje dokumentacija za navigaciju, bez zamjene CURRENT FULL ROOT-a.
+
+```yaml
+root_lite_review:
+  status: REVIEW_REQUIRED
+  topic: "Moguće zastarjela formulacija Tyrionove alternative"
+  action: "Otvoriti TASK-005 za detaljnu provjeru"
+  canon_decision: null
+```
+
+Za nalaz NAV-01 nije donesena odluka UNCHANGED, NEEDS_REVISION, SUPERSEDED
+ili CANON_REVIEW. Ta procjena pripada budućem TASK-005 nakon zasebnog mergea
+PR-a #8. Sada je odobreno samo evidentiranje REVIEW_REQUIRED; sadržaj
+ROOT-LITE-a, ROOT-a, USTAVA i SOURCE građe ostaje netaknut.
 
 ## 1. SOURCE/04_SOURCE_MASTER.md — sadržaj i porijeklo
 
@@ -161,8 +230,10 @@ svakom dijelu FULL ROOT-a.
   konstrukciju. To je konkretan kandidat za dokumentacijsku korekciju;
   sama rečenica ne dokazuje novi sukob zaključanih odluka ili uzrok rute.
 - Rizik: MEDIUM. Preporuka je zaseban, KENO-pregledan prijedlog uklanjanja
-  ili preciziranja te stavke prema postojećem CURRENT-u. Ni ROOT-LITE ni
-  CURRENT nisu mijenjani ovim pregledom. Nema osnove za promjenu kanona.
+  ili preciziranja te stavke prema postojećem CURRENT-u. KENO je za ovu
+  napomenu potvrdio REVIEW_REQUIRED; zasebna procjena ide u TASK-005.
+  Ni ROOT-LITE ni CURRENT nisu mijenjani. Ovim pregledom nije utvrđena
+  potreba za novom kanonskom odlukom.
 
 ### Verzija i porijeklo
 
@@ -246,20 +317,29 @@ normalizacija korištena za poređenje nije upisana u izvorne fajlove.
 | `ROOT_LITE.md` | 27818 | 1214 | `8bad9402b6f0e788d4171c345032f4fc09691bc300b419cfb39efc15b30784e9` |
 | `README.md` | 2273 | 31 | `8641d93049b33c9c13da7f2f535995ce7ea9c3812d9a9cbbeb5800a4ed4b9dff` |
 
-## Otvorena KENO odluka i predaja
+## Potvrđene odluke i naredna provjera
 
-KENO treba prihvatiti ili korigovati pet predloženih uloga, bez promjene
-sadržaja pregledanih izvora. Dosadašnji potvrđeni status je UNKNOWN za svih
-pet; ARCHIVE i DOCUMENTATION su prijedlozi ovog TASK-004, ne unesene konačne
-odluke. Postojeći USTAV i CURRENT ostaju CANON.
+KENO je 2026-10-26 potvrdio pet radnih klasifikacija: dva ARCHIVE i tri
+DOCUMENTATION. Svaka stavka ima `keno_decision: CONFIRMED`, `final_status`,
+datum, autora KENO i `canon_decision: null`. Polazni UNKNOWN zapisi u
+početnoj procjeni čuvaju porijeklo procjene; nisu suprotna konačna odluka.
 
-Nalaz NAV-01 treba posebno razmotriti kao dokumentacijski zahvat. Izostanak
-novije zamjenske putanje ostavlja `superseded_by: null` za svih pet fajlova;
-pojedinačna historijska formulacija ne čini cijeli SOURCE ili ROOT-LITE
-zastarjelim. Nijedan novi sadržaj nije promovisan u CANON.
+JUG PRIMARY/DUPLICATE odnos ostaje dokumentovan sa 1.309 jednakih linija;
+pojedinačne TEST oznake blokova ostaju nepromijenjene. Postojeći USTAV i
+CURRENT ostaju CANON. Za cijele fajlove nema dokazane zamjene ili jednakosti:
+`duplicate_of` i `superseded_by` ostaju null.
 
-Rezultat zadatka su samo ovaj dokument i ažurirani aktivni kontekst. Novi
-PR na `feature/task-004-unknown-review` predaje se na pregled bez mergea.
-Nema izmjena ROOT-a, USTAVA, SOURCE građe, ROOT-LITE-a, README-a ili ranijih
-inventara/klasifikacija, nema brisanja ni spajanja verzija. Eventualni novi
-kanonski sadržaj ide u zaseban TASK-005 tek uz izričitu KENO odluku.
+ROOT-LITE napomena ima REVIEW_REQUIRED. Nakon zasebnog mergea PR-a #8,
+TASK-005 treba pronaći tačnu formulaciju, porediti je s CURRENT-om i
+SOURCE građom te predložiti UNCHANGED, NEEDS_REVISION, SUPERSEDED ili
+CANON_REVIEW. Nijedan od tih ishoda nije izabran ovim commitom.
+To nije automatsko odobrenje izmjene ROOT-LITE-a ili kanona.
+
+Rezultat ovog koraka su samo ažurirani TASK-004 izvještaj i aktivni
+kontekst, uz novi commit u postojećem PR-u #8. **PR #8 se ne mergeuje u
+ovom koraku**, prema izričitom KENO pravilu. TASK-005 još nije otvoren.
+
+ROOT, USTAV, SOURCE građa, ROOT-LITE, README i prethodni inventari ostaju
+netaknuti. Nema brisanja, pretvaranja ARCHIVE u CANON ili automatskog
+spajanja verzija. Svaka eventualna izmjena kanona zahtijeva zasebnu
+izričitu KENO odluku nakon provjere.
