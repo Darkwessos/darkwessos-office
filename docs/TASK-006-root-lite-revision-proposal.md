@@ -6,10 +6,14 @@
 - status: TEST
 - updated_at: 2026-10-26
 - canon_status: null
-- keno_decision: WAIT
+- keno_decision: APPROVE
+- decision_date: "2026-10-26"
+- decision_author: KENO
 
-Ovo je samo predlog teksta za KENO pregled. Preporuka APPROVE ispod nije
-evidentirana KENO odluka niti odobrenje stvarne izmjene ROOT-LITE-a.
+KENO je 2026-10-26 porukom „Approve“ odobrio tačan predloženi dokumentacijski
+tekst iz ovog izvještaja. Odluka se odnosi na dokumentacijsku korekciju,
+bez nove kanonske odluke. Primjena ide kroz zaseban TASK-007;
+ROOT-LITE nije izmijenjen u TASK-006. PR #10 se ovim korakom ne mergeuje.
 
 ## Predmet korekcije
 
@@ -138,7 +142,7 @@ mehanizam važeći. Predložena referenca na CURRENT §22 je dio iste linije.
 TASK-005 je preporučio uklanjanje stare stavke. TASK-006 sada razrađuje
 zamjenski tekst prema zahtjevu za preciznom novom formulacijom: čuva korisnu
 OPEN navigaciju i izričito upućuje na postojeće ograničenje. Taj izbor je
-urednički predlog koji KENO tek treba razmotriti.
+urednički predlog koji je KENO odobrio 2026-10-26.
 
 ## Obrazloženje
 
@@ -156,6 +160,9 @@ urednički predlog koji KENO tek treba razmotriti.
 ## KENO pitanje
 
 - Da li odobravaš predloženu dokumentacijsku korekciju ROOT_LITE.md linije 930?
+- Odgovor KENO: „Approve“ — APPROVE, 2026-10-26.
+- Obuhvat: tačan proposed_text iz ovog izvještaja; bez izmjene kanona.
+- canon_decision: null
 
 ## Preporučena odluka
 
@@ -164,8 +171,8 @@ urednički predlog koji KENO tek treba razmotriti.
   jasno razlikuje OPEN detalje od SUPERSEDED mehanizma i sadrži
   eksplicitnu referencu na važeći ROOT, bez nove kanonske odluke.
   Odobrenje treba da se odnosi samo na ovaj dokumentacijski tekst;
-  eventualna primjena ide u zaseban TASK-007. Do KENO odgovora
-  keno_decision ostaje WAIT.
+  eventualna primjena ide u zaseban TASK-007. KENO je prihvatio predlog;
+  keno_decision je APPROVE. Stvarna izmjena nije izvršena ovim commitom.
 
 ## Granice
 
