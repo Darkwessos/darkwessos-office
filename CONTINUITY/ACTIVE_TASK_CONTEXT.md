@@ -1,24 +1,27 @@
 ---
-task_id: TASK-001
-title: "Postavljanje DARKWESSOS osnove"
-status: IDEA
+task_id: TASK-002
+title: "Migracija postojeće DARKWESSOS građe — faza 1"
+status: TEST
 updated_at: "2026-10-26"
 source_refs:
   - USTAV.md
   - CURRENT_FULL_ROOT.md
+  - docs/MIGRATION_INVENTORY.md
 open_questions:
-  - "Koji postojeći materijali treba da uđu u novu strukturu?"
-next_step: "Pregledati postojeće DARKWESSOS materijale i rasporediti ih po folderima."
+  - "Koje stare fajlove KENO treba da klasifikuje kao CANON?"
+  - "Koje verzije su zastarjele?"
+  - "Koje materijale treba zadržati kao istraživanje?"
+next_step: "Prikupiti postojeće DARKWESSOS materijale i napraviti inventar."
 canon_status: null
 ---
 
 ## Trenutni kontekst
-- Napravljen je novi GitHub repozitorij darkwessos.
-- Postavljena je osnovna struktura.
-- Još nisu premješteni stari materijali.
+- DARKWESSOS v0.1.0 struktura je mergeovana u main.
+- CURRENT_FULL_ROOT.md ostaje prazan šablon.
+- Stara građa još nije premještena.
 
 ## Odluke KENO
-- Nema još kanonskih odluka.
+- Nema novih kanonskih odluka.
 
 ## Sljedeći korak
-- Pregledati postojeće materijale i rasporediti ih.
+- Napraviti inventar postojećih materijala.
