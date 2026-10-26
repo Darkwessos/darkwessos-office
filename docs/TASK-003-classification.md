@@ -2,10 +2,12 @@
 
 Datum: 2026-10-26. Radni status: TEST / NON_CANON. `canon_status: null`.
 
-Ovo je priprema KENO odluka, bez nove odluke o sadržaju svijeta. Postojeći
-odobreni USTAV i CURRENT FULL ROOT ostaju CANON prema izričitom KENO nalogu
-za TASK-003. `CANON_CANDIDATE` koristi se samo za konkretan novi predloženi
-sadržaj; u ovom pregledu takav sadržaj nije odabran niti promoviran.
+KENO je 2026-10-26 potvrdio klasifikaciju svih sedam putanja i dokumentarni
+JUG odnos PRIMARY/DUPLICATE. Potvrda UNKNOWN oznake znači da je odluka o
+zadržavanju tog radnog statusa donesena; sadržaj još čeka detaljnu provjeru.
+Nema nove odluke o sadržaju svijeta. Postojeći USTAV i CURRENT ostaju CANON.
+`CANON_CANDIDATE` ostaje rezervisan za konkretan novi predloženi sadržaj;
+ovim zapisom nijedan novi sadržaj ne dobija taj status ili CANON.
 
 ## Osnova i granica pregleda
 
@@ -44,7 +46,11 @@ za cijeli fajl. Poznato ponavljanje odlomka odvojeno je evidentirano ispod;
 ne pretvara cijeli Addendum u duplikat. Rizik označava posljedice pogrešne
 klasifikacije ili kasnije izmjene, ne opasnost od čitanja dokumenta.
 
-## Sedam putanja — prijedlozi za KENO pregled
+## Sedam putanja — početni prijedlozi
+
+Tabela čuva početnu procjenu i pitanja prije odluke. Važeće potvrde i razlozi
+KENO nalaze se u narednom odjeljku; pet UNKNOWN oznaka ostaje namjerno otvoreno
+za detaljnu provjeru sadržaja kroz TASK-004.
 
 | path | current_status | proposed_status | reason | risk | duplicate_of | superseded_by | KENO question |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -55,6 +61,78 @@ klasifikacije ili kasnije izmjene, ne opasnost od čitanja dokumenta.
 | `USTAV.md` | CANON | CANON | Postojeći vrhovni akt, izričito očuvan u nalogu za TASK-003. Odjeljak 6 razdvaja migraciju i prisustvo u ROOT-u od novog LOCK-a. | HIGH | null | null | Nema nove odluke za ovu putanju u TASK-003: KENO je izričito odredio da postojeći USTAV ostaje CANON. |
 | `ROOT_LITE.md` | UNKNOWN | UNKNOWN | Poznata navigacijska funkcija, bez samostalnog kanonskog autoriteta. Izričito zabranjuje automatsko pretvaranje OPEN/RADNO u LOCK. Nije dokazana zamjena cijelog fajla novijom dostupnom putanjom. | MEDIUM | null | null | Da li ROOT-LITE ostaje isključivo navigacija prema postojećem CURRENT-u, uz odvojen budući pregled ako se uoči konkretno neslaganje? |
 | `README.md` | UNKNOWN | UNKNOWN | Organizacijski opis i navigacijski indeks prethodne sinhronizacije, bez zasebne odluke o svijetu. Poznata funkcija nije razlog za CANON_CANDIDATE. | LOW | null | null | Da li README ostaje organizacijska dokumentacija bez kanonskog statusa ili imaš konkretnu nekanonsku dopunu opisa? |
+
+## KENO odluka — 2026-10-26
+
+Autor odluke: KENO. [Review komentar u PR-u #7](https://github.com/Darkwessos/darkwessos-office/pull/7#pullrequestreview-5649971863)
+prenosi izričitu odluku iz razgovora. GitHub review je COMMENT, bez pokušaja
+formalnog samo-odobravanja PR-a.
+
+Svih sedam odluka o klasifikaciji je CONFIRMED. `final_status: UNKNOWN`
+bilježi potvrđenu odluku da se status sadržaja još ne zaključava; to nije
+potvrda novog kanona. USTAV i CURRENT zadržavaju prethodni autoritet.
+
+```yaml
+decisions:
+  - path: "SOURCE/04_SOURCE_MASTER.md"
+    keno_decision: CONFIRMED
+    final_status: UNKNOWN
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Status još nije potvrđen; čeka se detaljna provjera sadržaja."
+  - path: "SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md"
+    keno_decision: CONFIRMED
+    final_status: UNKNOWN
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Status još nije potvrđen; čeka se detaljna provjera sadržaja."
+  - path: "SOURCE/izvori.md"
+    keno_decision: CONFIRMED
+    final_status: UNKNOWN
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Status još nije potvrđen; čeka se detaljna provjera sadržaja."
+  - path: "CURRENT_FULL_ROOT.md"
+    keno_decision: CONFIRMED
+    final_status: CANON
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Postojeći autoritativni CURRENT FULL ROOT ostaje CANON. Nema nove promjene ROOT-a u ovom PR-u."
+  - path: "USTAV.md"
+    keno_decision: CONFIRMED
+    final_status: CANON
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Postojeći USTAV ostaje CANON. Nema nove promjene USTAV-a u ovom PR-u."
+  - path: "ROOT_LITE.md"
+    keno_decision: CONFIRMED
+    final_status: UNKNOWN
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Status još nije potvrđen; čeka se detaljna provjera sadržaja."
+  - path: "README.md"
+    keno_decision: CONFIRMED
+    final_status: UNKNOWN
+    decision_date: "2026-10-26"
+    decision_author: KENO
+    reason: "Status još nije potvrđen; čeka se detaljna provjera sadržaja."
+```
+
+Postojeće TEST oznake pojedinačnih blokova ostaju nepromijenjene. Nema
+promjene ROOT-a, USTAVA ili SOURCE građe, niti automatskog pretvaranja
+UNKNOWN u CANON.
+
+```yaml
+jug_relation:
+  primary: "SOURCE/04_SOURCE_MASTER.md — odlomak idejnog plana"
+  duplicate: "SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md — ponovljeni izvod"
+  identical_lines: 1309
+  status: DOCUMENTED
+  canon_decision: null
+```
+
+KENO je potvrdio porijeklo i odnos zapisa, bez novog kanonskog odobrenja.
+Tačni obuhvati i provjera tekstualne jednakosti navedeni su ispod.
 
 ## Dokazni oslonci za klasifikaciju
 
@@ -79,20 +157,29 @@ Nema bajtno identičnih nepraznih cijelih Git fajlova među pregledanih 27
 putanja. Osam praznih `.gitkeep` markera čuva različite direktorije; nisu
 scene ni izvori priče i nisu dio sedam putanja za klasifikaciju.
 
-Potvrđeno je ponavljanje JUG odjeljaka 15–49 unutar Addenduma:
+Potvrđeno je ponavljanje JUG odjeljaka 15–49 između SOURCE MASTER-a i
+Addenduma. Raniji prikaz označavao je primarni prikaz unutar samog Addenduma;
+KENO odluka precizira PRIMARY referencu na odlomak idejnog plana u SOURCE
+MASTER-u. Oznaka ne mijenja status bilo kojeg cijelog fajla.
 
 | Obuhvat | relation | duplicate_of | superseded_by | Obrazloženje |
 | --- | --- | --- | --- | --- |
-| `SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md`, linije 3962–5270, unutar IDEJNOG PLANA | PRIMARY | null | null | Primarni prikaz ovog odlomka prema porijeklu: DOPUNA JUG izričito se opisuje kao izvod idejnog plana. PRIMARY ne daje status CANON niti tvrdi da je dostupan binarni original. |
-| `SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md`, linije 5371–6679, unutar DOPUNE JUG | DUPLICATE | `SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md`, linije 3962–5270 | null | Isti odlomak od 1.309 linija u drugom dokumentarnom omotaču; izvorni tekst i obje kopije ostaju sačuvani. |
+| `SOURCE/04_SOURCE_MASTER.md`, linije 66589–67897, u arhivskom izvodu `idejni plan (1).docx` (odjeljak počinje na 65869) | PRIMARY | null | null | Referenca potvrđena odlukom KENO. Izvorni odlomak idejnog plana, odjeljci 15–49, prema porijeklu zapisa. PRIMARY ne daje CANON status i ne tvrdi da je binarni original testiran. |
+| `SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md`, linije 5371–6679, unutar DOPUNE JUG | DUPLICATE | `SOURCE/04_SOURCE_MASTER.md`, linije 66589–67897 | null | Ponovljeni izvod od 1.309 jednakih tekstualnih linija. KENO je potvrdio odnos, bez brisanja ili novog kanonskog odobrenja. |
+| `SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md`, linije 3962–5270, unutar IDEJNOG PLANA | DUPLICATE | `SOURCE/04_SOURCE_MASTER.md`, linije 66589–67897 | null | Dodatno sačuvano pojavljivanje istog odlomka, ranije korišteno za poređenje unutar Addenduma. Ostaje sačuvano s izvornim statusima. |
 
-Metod: direktno poređenje tekstualnih linija oba obuhvata, bez njihove izmjene.
-SHA-256 oba bloka, s LF i završnim novim redom:
+Metod: direktno poređenje 1.309 tekstualnih linija sva tri obuhvata. Za
+poređenje se CRLF tretira kao LF; izvorni fajlovi i njihovi završeci redova
+nisu mijenjani. SOURCE MASTER odjeljak navodi izvorni DOCX SHA-256
+`a5a8f70c387d3689f2e27f95b77e251b8ef9252b64334360db997bccac5167d3`,
+isti dokumentarni identitet naveden uz IDEJNI PLAN i DOPUNU JUG u Addendumu.
+To je provjera zapisa o porijeklu, ne nezavisan test binarnog originala.
+SHA-256 zajedničkog bloka, s LF i završnim novim redom:
 `f92e9f7524378a3abc646dc2b947f1b3754a41070645761b8f7c3647ae0dcd0c`.
 
-KENO pitanje: da li prihvataš ovaj dokumentarni odnos PRIMARY/DUPLICATE
-uz očuvanje obje kopije i njihovih TEST oznaka? To nije zahtjev da se odobri
-novi sadržaj svijeta ili da se išta briše.
+KENO potvrda: odnos PRIMARY/DUPLICATE je prihvaćen 2026-10-26, uz očuvanje
+svih kopija i postojećih TEST oznaka pojedinačnih blokova.
+`canon_decision: null` — nije doneseno novo kanonsko odobrenje.
 
 ## SUPERSEDED_BY — bez automatskog zaključka
 
@@ -105,18 +192,22 @@ KENO pitanje: postoji li konkretna starija verzija i dostupna novija putanja
 koju želiš evidentirati kao zamjenu? Ako postoji, treba navesti oboje i tačan
 obuhvat; do tada nema nove oznake SUPERSEDED_BY ili premještanja u arhivu.
 
-## Otvorene odluke i izlaz zadatka
+## Potvrđene odluke i sljedeći korak
 
-- Postojeći USTAV i CURRENT ostaju CANON po izričitom KENO nalogu.
-- Za preostalih pet cijelih fajlova predložen je UNKNOWN uz poznate funkcije;
-  pojedinačne TEST oznake razvojnog sadržaja ostaju očuvane.
-- Odnos PRIMARY/DUPLICATE označen je samo za potvrđeni JUG odlomak.
-- Nije odabran novi CANON_CANDIDATE, PROPOSAL ili IDEA samo na osnovu uvoza.
-- KENO odluke za konkretne nove dijelove i eventualne zamjenske verzije ostaju
-  otvorene. Ovaj dokument ih ne predstavlja kao već donesene.
+- Svih sedam putanja ima `keno_decision: CONFIRMED`, datum 2026-10-26 i autora KENO.
+- USTAV i CURRENT ostaju CANON; za pet ostalih putanja potvrđen je UNKNOWN,
+  uz detaljnu provjeru sadržaja koja tek slijedi.
+- Dokumentarni JUG odnos PRIMARY/DUPLICATE je potvrđen; postojeće TEST oznake
+  ostaju nepromijenjene.
+- Nije odabran novi CANON_CANDIDATE niti UNKNOWN pretvoren u CANON.
+- Za cijele fajlove nije dokazan duplicate_of ili superseded_by; ostaju null.
 
-Sljedeći korak je KENO pregled sedam redova i pitanja. Eventualni novi
-CANON_CANDIDATE dobija tačan izvor i obuhvat u zasebnom prijedlogu; izmjena
-CURRENT-a moguća je tek nakon zasebne izričite odluke. Ovaj TASK-003 PR predaje
-se na pregled bez mergea. Nema izmjena SOURCE građe, kanona, brisanja ili
-automatskog spajanja verzija.
+PR #7 s ovim commitom ostaje otvoren i ne mergeuje se u ovom koraku.
+Nakon zasebnog mergea slijedi TASK-004 — detaljna provjera pet UNKNOWN
+stavki, uz prijedlog `final_status` (CANON | TEST | IDEA | PROPOSAL | ARCHIVE |
+DOCUMENTATION), razlog, rizik, odnose i pitanje KENO za svaki fajl.
+To je budući zadatak, nije izvršen ovim commitom.
+
+Ako provjera pokaže potrebu za promjenom CURRENT-a, priprema se zaseban
+TASK-005 uz izričitu KENO odluku. Nema izmjene ROOT-a, USTAVA ili SOURCE građe,
+brisanja ili automatskog spajanja verzija.
