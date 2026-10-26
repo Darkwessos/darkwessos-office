@@ -1,44 +1,44 @@
 ---
-task_id: TASK-006
-title: "Priprema dokumentacijske korekcije ROOT-LITE linije 930"
+task_id: TASK-007
+title: "Primjena odobrene dokumentacijske korekcije ROOT-LITE linije 930"
 status: TEST
 updated_at: "2026-10-26"
 source_refs:
-  - docs/TASK-005-root-lite-tyrion-review.md
   - docs/TASK-006-root-lite-revision-proposal.md
+  - docs/TASK-007-root-lite-revision-application.md
   - ROOT_LITE.md
   - CURRENT_FULL_ROOT.md
 open_questions:
-  - "Da li TASK-007 primjenjuje odobrenu dokumentacijsku korekciju na ROOT_LITE.md liniju 930?"
-next_step: "TASK-007 — primijeniti odobrenu dokumentacijsku korekciju na ROOT_LITE.md liniju 930."
+  - "Da li postoje preostale navigacijske nedosljednosti za provjeru u TASK-008?"
+next_step: "Nakon mergea TASK-007 PR-a slijedi TASK-008 — provjera konzistentnosti ROOT-LITE nakon korekcije."
 canon_status: null
 ---
 
-## KENO odluka
+## Trenutni kontekst
 
-- Predlog dokumentacijske korekcije je odobren.
-- Stvarna izmjena ROOT_LITE.md još nije izvršena.
-- TASK-007 će primijeniti odobreni tekst.
-- CURRENT_FULL_ROOT.md, USTAV.md i SOURCE građa ostaju netaknuti.
+- PR #10 je uz izričit KENO nalog squash-mergeovan kao e16eb3105c84b2bfbf6df030ec9bbd2e85fcfbb3.
+- TASK-006 je odobrio tačan dokumentacijski tekst za ROOT-LITE liniju 930.
+- TASK-007 primjenjuje taj tekst; svi drugi ROOT-LITE redovi ostaju nepromijenjeni.
+- Izvještaj primjene je docs/TASK-007-root-lite-revision-application.md.
+- CURRENT_FULL_ROOT.md, USTAV.md, SOURCE građa i raniji izvještaji ostaju netaknuti.
 - Nema novih kanonskih odluka.
 
-## Evidencija odluke
+## Kontekst promjene
 
+- source: TASK-006
 - keno_decision: APPROVE
-- final_status: DOCUMENTATION_REVISION_APPROVED
 - decision_date: "2026-10-26"
 - decision_author: KENO
-- risk: MEDIUM
+- reference: CURRENT_FULL_ROOT.md §22.3–§22.5
+- change_type: DOCUMENTATION_REVISION
+- application_status: APPLIED
 - canon_decision: null
-- next_action: TASK-007_APPLY_ROOT_LITE_REVISION
-- Tačan odobreni tekst i reference na CURRENT §22.3–§22.5 ostaju u TASK-006 izvještaju.
 
-## Redoslijed primjene
+## Odluke KENO i redoslijed
 
-- Ovaj korak ažurira samo TASK-006 izvještaj i aktivni kontekst novim commitom u PR-u #10.
-- PR #10 se ne mergeuje ovim korakom; merge izvršava KENO.
-- Tek nakon KENO mergea PR-a #10 priprema se TASK-007 na grani feature/task-007-apply-root-lite-revision.
-- TASK-007 dodaje docs/TASK-007-root-lite-revision-application.md, mijenja samo liniju 930 u ROOT_LITE.md i ažurira ovaj kontekst.
-- TASK-007 bilježi source: TASK-006, keno_decision: APPROVE, decision_date: "2026-10-26", reference: CURRENT_FULL_ROOT.md §22.3–§22.5, change_type: DOCUMENTATION_REVISION i canon_decision: null.
-- TASK-007 ide kroz zaseban Pull Request bez mergea.
-- Nakon pregleda i mergea TASK-007 slijedi TASK-008 — provjera konzistentnosti ROOT-LITE nakon korekcije.
+- Najnoviji KENO nalog odobrava merge PR-a #10, pripremu TASK-007 PR-a,
+  provjeru da je u ROOT-LITE-u promijenjena samo linija 930 i zatim merge TASK-007.
+- Ranija uputa da TASK-007 PR ostane bez mergea zamijenjena je tim izričitim nalogom.
+- Merge TASK-007 zavisi od provjere tačnog teksta, jedno-linijskog ROOT-LITE diffa
+  i ograničenja promjene na ROOT-LITE, izvještaj primjene i aktivni kontekst.
+- TASK-008 je sljedeći zaseban zadatak; njegova puna provjera još nije izvršena.

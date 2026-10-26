@@ -927,7 +927,7 @@ Ne rješavati ove tačke u ROOT-LITE.
 
 — Tyrionova tačna početna ruta;
 
-— organski izvor Tyrionove alternative;
+— konkretni Tywinovi izvještaji i scenska izvedba unaprijed odabranog Tyrionovog pravca; stari mehanizam preusmjeravanja Tyriona istom Route 1 / Littlefingerovom blokadom je SUPERSEDED (CURRENT_FULL_ROOT.md §22);
 
 — tačne ceste/raskrsnice;
 
