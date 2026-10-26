@@ -7,8 +7,12 @@
 - updated_at: 2026-10-26
 - canon_status: null
 - keno_decision: APPROVE
+- final_status: DOCUMENTATION_REVISION_APPROVED
 - decision_date: "2026-10-26"
 - decision_author: KENO
+- risk: MEDIUM
+- canon_decision: null
+- next_action: TASK-007_APPLY_ROOT_LITE_REVISION
 
 KENO je 2026-10-26 porukom „Approve“ odobrio tačan predloženi dokumentacijski
 tekst iz ovog izvještaja. Odluka se odnosi na dokumentacijsku korekciju,
@@ -185,6 +189,10 @@ urednički predlog koji je KENO odobrio 2026-10-26.
 - Nema brisanja fajlova
 - Nema novih kanonskih odluka
 
-TASK-006 dodaje samo ovaj predlog i zamjenjuje sadržaj aktivnog konteksta
-tačno zadanim tekstom. PR se otvara prema main na grani
-`feature/task-006-root-lite-revision-proposal` i ne mergeuje se.
+TASK-006 čuva odobreni predlog i KENO odluku te ažurira aktivni kontekst
+za primjenu kroz zaseban TASK-007. PR #10 ostaje na grani
+`feature/task-006-root-lite-revision-proposal` i ne mergeuje se ovim korakom.
+Tek nakon KENO mergea PR-a #10 priprema se grana
+`feature/task-007-apply-root-lite-revision`, izvještaj
+`docs/TASK-007-root-lite-revision-application.md`, izmjena samo ROOT-LITE
+linije 930 i ažurirani aktivni kontekst, kroz zaseban PR bez mergea.
