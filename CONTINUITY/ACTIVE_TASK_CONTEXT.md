@@ -1,52 +1,56 @@
 ---
-task_id: TASK-002
-title: "Migracija postojeće DARKWESSOS građe"
+task_id: TASK-003
+title: "Klasifikacija sedam putanja iz migracionog inventara"
 status: TEST
 updated_at: "2026-10-26"
 source_refs:
+  - docs/TASK-003-classification.md
   - docs/MIGRATION_INVENTORY.md
-  - SOURCE/izvori.md
-  - SOURCE/04_SOURCE_MASTER.md
-  - SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md
   - CURRENT_FULL_ROOT.md
   - USTAV.md
 open_questions:
-  - "Koji fajlovi ili njihovi dijelovi imaju potvrdu za CANON?"
-  - "Koji su zastarjeli?"
-  - "Koji su samo istraživanje?"
-next_step: "Pregledati klasifikaciju i donijeti KENO odluke."
+  - "Da li ROOT_LITE.md treba ostati kao navigacioni pregled?"
+  - "Da li README.md treba klasifikovati kao dokumentacija, a ne lore?"
+  - "Da li SOURCE master i Dopuna ideja trebaju detaljnu provjeru sadržaja?"
+next_step: "Nakon mergea PR #7, otvoriti TASK-004 za detaljnu provjeru UNKNOWN stavki."
 canon_status: null
 ---
 
 ## Šta je ažurirano
 
-- NON_CANON kontekst TASK-002; inventar je dopunjen pregledom stvarnog GitHub stanja.
-- Pregledani main: `df5a46cbd203c45e877b929ce6b7a271ec9d0498` (2026-10-26).
-- Prethodni PR #4 dodao je SOURCE MASTER; PR #5 uskladio je USTAV, CURRENT,
-  ROOT-LITE, Addendum i indekse. U odnosu na main nakon PR-a #2 promijenjeno
-  je sedam putanja, bez brisanja ili preimenovanja.
-- Inventar sadrži predloženi status za svaku promijenjenu putanju, odvojene
-  statuse SOURCE blokova, provjeru duplikata i identiteta sadržaja.
-- SOURCE i Addendum su dokumentarno porijeklo s miješanim statusima; ideje,
-  idejni plan i JUG razvoj ostaju TEST gdje je to izričito navedeno.
-- CURRENT_FULL_ROOT.md više nije prazan šablon: header bilježi KENO-odobren
-  CURRENT od 25.10.2026., prenesen u prethodnom PR-u #5. Otvoreni, radni i
-  historijski dijelovi time ne postaju LOCK.
-- U ovom zadatku mijenjaju se samo inventar i ovaj kontekst. Nema novih
-  kanonskih odluka, promjena ROOT-a ili izvornih fajlova.
-- Prethodni kontekst i početni inventar ostaju sačuvani u Git historiji;
-  početni historijski inventar zadržan je i unutar dopunjenog dokumenta.
+- U docs/TASK-003-classification.md evidentirane su KENO odluke za svih sedam putanja.
+- Svaka stavka ima keno_decision: CONFIRMED, final_status, decision_date: "2026-10-26"
+  i decision_author: KENO.
+- Potvrđeno je pet UNKNOWN oznaka: SOURCE/04_SOURCE_MASTER.md,
+  SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md, SOURCE/izvori.md, ROOT_LITE.md i README.md.
+  Potvrda UNKNOWN oznake ne zaključava sadržaj i ne pretvara ga u CANON.
+- CURRENT_FULL_ROOT.md i USTAV.md ostaju postojeći CANON, bez izmjene sadržaja.
+- JUG PRIMARY je odlomak idejnog plana u SOURCE/04_SOURCE_MASTER.md,
+  linije 66589–67897; DUPLICATE je ponovljeni izvod u
+  SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md, linije 5371–6679.
+- Potvrđena je tekstualna jednakost 1.309 linija s dodatnom kopijom u Addendumu,
+  linije 3962–5270. Porijeklo je DOCUMENTED; canon_decision: null.
+- Postojeće TEST oznake pojedinačnih blokova ostaju nepromijenjene.
+- Ažuriraju se samo klasifikacija i ovaj kontekst; nema promjena ROOT-a,
+  USTAVA, SOURCE građe ili inventara, brisanja ili spajanja verzija.
+- Prethodni TASK-003 prijedlozi i TASK-002 kontekst ostaju sačuvani u Git historiji.
 
 ## Odluke KENO
 
-- Nema novih kanonskih odluka.
-- Prethodno odobrenje „Uskladi“ dokumentirano je u PR-u #5; ovaj kontekst
-  evidentira taj trag, bez samostalnog odobravanja dodatnog sadržaja.
+- KENO je 2026-10-26 potvrdio svih sedam klasifikacija i JUG odnos,
+  uz zadržavanje postojećih TEST oznaka pojedinačnih blokova.
+- Odluka je objavljena kao COMMENT review u PR-u #7:
+  https://github.com/Darkwessos/darkwessos-office/pull/7#pullrequestreview-5649971863
+- Nema novih kanonskih odluka o sadržaju svijeta; postojeći USTAV i CURRENT
+  zadržavaju autoritet. Nijedan UNKNOWN nije pretvoren u CANON.
+- PRIMARY/DUPLICATE opisuje porijeklo i ponavljanje zapisa, ne kanonski status.
+- Izričiti nalog ovog koraka je novi commit u PR-u #7, bez mergea.
 
 ## Sljedeći korak
 
-- Pregledati predloženu klasifikaciju u docs/MIGRATION_INVENTORY.md i PR Files changed.
-- KENO određuje šta prihvata kao CANON, šta ostaje TEST/IDEA/PROPOSAL i šta
-  označava zastarjelim; UNKNOWN ostaje gdje nedostaje jasan status.
-- Eventualnu odobrenu promjenu CURRENT_FULL_ROOT.md pripremiti odvojeno,
-  s tačnim izvorom i odlukom. Ovaj PR ostaje za pregled, bez mergea.
+- Pregledati novi commit i Files changed PR-a #7; ovaj korak ne izvršava merge.
+- Nakon zasebnog mergea otvoriti TASK-004 — detaljna provjera pet UNKNOWN stavki:
+  za svaki fajl predložiti final_status (CANON | TEST | IDEA | PROPOSAL | ARCHIVE |
+  DOCUMENTATION), reason, risk, duplicate_of, superseded_by i KENO question.
+- Eventualna promjena CURRENT_FULL_ROOT.md ide tek kroz zaseban TASK-005,
+  uz izričitu KENO odluku. TASK-004 i TASK-005 nisu započeti ovim commitom.
