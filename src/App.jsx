@@ -1,122 +1,75 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { BrowserRouter, Navigate, NavLink, Route, Routes, useLocation } from 'react-router'
+import { Archive, BookOpenText, Compass, LayoutDashboard, Feather, LockKeyhole, Menu, CircleDot } from 'lucide-react'
+import { OFFICE_SECTIONS, getSection } from './officeConfig.js'
+import StoryPage from './pages/StoryPage.jsx'
+import WorkshopPage from './pages/WorkshopPage.jsx'
+import CommandPage from './pages/CommandPage.jsx'
+import ArchivePage from './pages/ArchivePage.jsx'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const sectionIcons = {
+  story: BookOpenText,
+  workshop: Compass,
+  command: LayoutDashboard,
+  archive: Archive,
+}
 
+function Navigation({ compact = false }) {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <nav aria-label="Glavna navigacija" className={compact ? 'bottom-nav' : 'nav-stack'}>
+      {OFFICE_SECTIONS.map((section) => {
+        const Icon = sectionIcons[section.id]
+        return (
+          <NavLink key={section.id} to={section.path} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <Icon aria-hidden="true" size={20} strokeWidth={1.7} />
+            <span className="nav-label">{section.label}</span>
+            {!compact && <span className="nav-caption">{section.caption}</span>}
+          </NavLink>
+        )
+      })}
+    </nav>
   )
 }
 
-export default App
+function Shell() {
+  const location = useLocation()
+  const active = getSection(location.pathname)
+  return (
+    <div className="office-shell">
+      <aside className="side-panel">
+        <div className="brand-row">
+          <div className="brand-symbol"><Feather size={24} strokeWidth={1.5} /></div>
+          <div><div className="brand-name">DARKWESSOS</div><div className="brand-sub">LIVING STORY OFFICE</div></div>
+        </div>
+        <div className="nav-heading">RADNI PROSTORI</div>
+        <Navigation />
+        <div className="side-panel-bottom">
+          <div className="side-stamp"><LockKeyhole size={15} /> KANON POD KENO KONTROLOM</div>
+          <div className="profile-line"><div className="profile-avatar">K</div><div><strong>KENO</strong><small>Autor · Privatni prostor</small></div></div>
+        </div>
+      </aside>
+
+      <div className="office-content">
+        <header className="top-bar">
+          <div className="top-left"><span className="top-rail-icon"><Menu size={19} /></span><span className="crumb-start">DARKWESSOS</span><span className="crumb-separator">/</span><strong>{active.label}</strong></div>
+          <div className="top-right"><span className="local-indicator"><CircleDot size={13} /> Lokalni rad</span><span className="top-avatar">K</span></div>
+        </header>
+        <main className="main-workspace" id="main-content">
+          <Routes>
+            <Route path="/" element={<Navigate to="/story" replace />} />
+            <Route path="/story" element={<StoryPage />} />
+            <Route path="/workshop" element={<WorkshopPage />} />
+            <Route path="/command" element={<CommandPage />} />
+            <Route path="/archive" element={<ArchivePage />} />
+            <Route path="*" element={<Navigate to="/story" replace />} />
+          </Routes>
+        </main>
+      </div>
+      <Navigation compact />
+    </div>
+  )
+}
+
+export default function App() {
+  return <BrowserRouter><Shell /></BrowserRouter>
+}
