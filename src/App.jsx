@@ -1,10 +1,11 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, NavLink, Route, Routes, useLocation } from 'react-router'
 import { Archive, BookOpenText, Compass, LayoutDashboard, Feather, LockKeyhole, Menu, CircleDot } from 'lucide-react'
 import { OFFICE_SECTIONS, getSection } from './officeConfig.js'
-import StoryPage from './pages/StoryPage.jsx'
-import WorkshopPage from './pages/WorkshopPage.jsx'
-import CommandPage from './pages/CommandPage.jsx'
-import ArchivePage from './pages/ArchivePage.jsx'
+const StoryPage = lazy(() => import('./pages/StoryPage.jsx'))
+const WorkshopPage = lazy(() => import('./pages/WorkshopPage.jsx'))
+const CommandPage = lazy(() => import('./pages/CommandPage.jsx'))
+const ArchivePage = lazy(() => import('./pages/ArchivePage.jsx'))
 import './App.css'
 
 const sectionIcons = {
@@ -55,6 +56,7 @@ function Shell() {
           <div className="top-right"><span className="local-indicator"><CircleDot size={13} /> Lokalni rad</span><span className="top-avatar">K</span></div>
         </header>
         <main className="main-workspace" id="main-content">
+          <Suspense fallback={<div className="loading-state">Otvaram radni prostor…</div>}>
           <Routes>
             <Route path="/" element={<Navigate to="/story" replace />} />
             <Route path="/story" element={<StoryPage />} />
@@ -63,6 +65,7 @@ function Shell() {
             <Route path="/archive" element={<ArchivePage />} />
             <Route path="*" element={<Navigate to="/story" replace />} />
           </Routes>
+          </Suspense>
         </main>
       </div>
       <Navigation compact />
