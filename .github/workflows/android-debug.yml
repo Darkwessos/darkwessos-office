@@ -51,22 +51,36 @@ jobs:
                 echo '::error::Existing APK but no reusable signing key. Restore the original debug keystore secret before building an update.'
                 exit 1
               fi
-              echo 'First debug APK: Gradle will create the key; the next step preserves it in a private artifact.'
+              mkdir -p "$HOME/.android"
+              keytool -genkeypair -keystore "$HOME/.android/debug.keystore" -storepass android -keypass android -alias androiddebugkey -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -keysize 2048 -validity 10000
+              chmod 600 "$HOME/.android/debug.keystore"
             fi
           fi
       - name: Assemble embedded debug APK
         working-directory: android
         run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: Verify APK signature matches preserved debug key
+        run: |
+          keytool -exportcert -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey -file "$RUNNER_TEMP/debug-cert.der"
+          expected=$(sha256sum "$RUNNER_TEMP/debug-cert.der" | cut -d ' ' -f 1)
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs android/app/build/outputs/apk/debug/app-debug.apk > apk-signature.txt
+          actual=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' apk-signature.txt)
+          test "$expected" = "$actual"
+          sha256sum android/app/build/outputs/apk/debug/app-debug.apk > apk-sha256.txt
       - uses: actions/upload-artifact@v4
         with:
           name: darkwessos-debug-key
           path: ~/.android/debug.keystore
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
       - uses: actions/upload-artifact@v4
         with:
           name: darkwessos-app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            apk-signature.txt
+            apk-sha256.txt
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always() && hashFiles('package-lock.json') != ''
