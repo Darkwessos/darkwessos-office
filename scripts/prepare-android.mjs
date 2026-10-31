@@ -6,6 +6,8 @@ function cap(...args) {
 }
 if (!existsSync('dist/index.html')) throw new Error('Nedostaje lokalni produkcijski build.');
 if (/registerSW|serviceWorker/.test(readFileSync('dist/index.html', 'utf8'))) throw new Error('Native build sadrži service-worker registraciju. Koristi build:native.');
+const js = (await import('node:fs')).readdirSync('dist/assets').filter(f => f.endsWith('.js')).map(f => readFileSync(`dist/assets/${f}`, 'utf8')).join('\n');
+if (!js.includes('deckInitialized')) throw new Error('Bundle nije dostavljeni MVP 0.2 (nedostaje marker modela).');
 if (!existsSync('android')) cap('add', 'android');
 const manifest = 'android/app/src/main/AndroidManifest.xml';
 let xml = readFileSync(manifest, 'utf8');

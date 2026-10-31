@@ -25,7 +25,7 @@ jobs:
       - name: Install SDK for Capacitor 7
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'platform-tools'
       - name: Resolve dependencies and lock
-        run: npm install
+        run: npm ci
       - run: npm run typecheck
       - run: npm test
       - run: npm run android:prepare
@@ -74,7 +74,7 @@ jobs:
           name: resolved-dependency-lock
           path: package-lock.json
       - name: Package buildable source with resolved lock and Android project
-        run: tar --exclude='*/build' --exclude='*/.gradle' --exclude='*/local.properties' -czf darkwessos-android-source.tar.gz src public tests scripts android .github package.json package-lock.json capacitor.config.ts index.html tsconfig.json vite.config.ts ANDROID-ACCEPTANCE.md ANDROID-REPORT.md README.md
+        run: tar --exclude='*/build' --exclude='*/.gradle' --exclude='*/local.properties' -czf darkwessos-android-source.tar.gz src public tests scripts android .github package.json package-lock.json capacitor.config.json index.html tsconfig.json vite.config.ts ANDROID-ACCEPTANCE.md ANDROID-REPORT.md README.md
       - uses: actions/upload-artifact@v4
         with:
           name: darkwessos-android-source
