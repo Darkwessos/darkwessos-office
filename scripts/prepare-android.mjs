@@ -13,7 +13,12 @@ const manifest = 'android/app/src/main/AndroidManifest.xml';
 let xml = readFileSync(manifest, 'utf8');
 // Keep manuscript outside Android cloud/device backups; explicit verified JSON is the backup.
 xml = xml.replace(/android:allowBackup="[^"]*"/g, 'android:allowBackup="false"');
-xml = xml.replace(/android:windowSoftInputMode="[^"]*"/g, 'android:windowSoftInputMode="adjustResize"');
+if (/android:windowSoftInputMode=/.test(xml)) {
+  xml = xml.replace(/android:windowSoftInputMode="[^"]*"/g, 'android:windowSoftInputMode="adjustResize"');
+} else {
+  xml = xml.replace(/(<activity\b[^>]*android:name="[^"]*MainActivity"[^>]*)(>)/, '$1 android:windowSoftInputMode="adjustResize"$2');
+}
+if (!xml.includes('android:windowSoftInputMode="adjustResize"')) throw new Error('MainActivity keyboard resize nije postavljen.');
 writeFileSync(manifest, xml);
 cap('sync', 'android');
 const config = JSON.parse(readFileSync('android/app/src/main/assets/capacitor.config.json', 'utf8'));

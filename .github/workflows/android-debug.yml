@@ -58,15 +58,23 @@ jobs:
           fi
       - name: Assemble embedded debug APK
         working-directory: android
-        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon \
+            -Pandroid.injected.signing.store.file="$HOME/.android/debug.keystore" \
+            -Pandroid.injected.signing.store.password=android \
+            -Pandroid.injected.signing.key.alias=androiddebugkey \
+            -Pandroid.injected.signing.key.password=android
       - name: Verify APK signature matches preserved debug key
         run: |
           keytool -exportcert -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey -file "$RUNNER_TEMP/debug-cert.der"
           expected=$(sha256sum "$RUNNER_TEMP/debug-cert.der" | cut -d ' ' -f 1)
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs android/app/build/outputs/apk/debug/app-debug.apk > apk-signature.txt
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs android/app/build/outputs/apk/debug/app-debug.apk | tee apk-signature.txt
           actual=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' apk-signature.txt)
           test "$expected" = "$actual"
           sha256sum android/app/build/outputs/apk/debug/app-debug.apk > apk-sha256.txt
+          mkdir -p apk-artifact
+          cp android/app/build/outputs/apk/debug/app-debug.apk apk-signature.txt apk-sha256.txt apk-artifact/
       - uses: actions/upload-artifact@v4
         with:
           name: darkwessos-debug-key
@@ -77,10 +85,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: darkwessos-app-debug
-          path: |
-            android/app/build/outputs/apk/debug/app-debug.apk
-            apk-signature.txt
-            apk-sha256.txt
+          path: apk-artifact/
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always() && hashFiles('package-lock.json') != ''
