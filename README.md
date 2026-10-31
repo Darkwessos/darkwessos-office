@@ -1,4 +1,4 @@
-> **Android nastavak:** vidi [ANDROID-REPORT.md](ANDROID-REPORT.md). APK još nije izgrađen; native/browser prihvat nije potvrđen. Za nove Capacitor zavisnosti prvo `npm install` (originalni lock je `package-lock.baseline.json`).
+> **Android nastavak:** vidi [ANDROID-REPORT.md](ANDROID-REPORT.md). Koristi `npm ci`; zaključane zavisnosti su provjerene u GitHub Actionsu. Prihvat na stvarnom Android uređaju ostaje PENDING.
 
 # DARKWESSOS Office — MVP 0.2
 
