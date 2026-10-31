@@ -21,6 +21,12 @@ export default function Command({ onOpen }: { onOpen: (sceneId: string) => void 
   useEffect(() => { setNativeTransferBusy(busy); return () => setNativeTransferBusy(false); }, [busy]);
   const file = useRef<HTMLInputElement>(null);
   useEffect(() => { requestPersistence().then(setStore); }, []);
+  useEffect(() => {
+    const input = file.current;
+    const cancelled = () => setMsg('Odabir datoteke otkazan. Podaci nisu promijenjeni.');
+    input?.addEventListener('cancel', cancelled);
+    return () => input?.removeEventListener('cancel', cancelled);
+  }, []);
 
   const restore = async (f?: File) => {
     if (!f) { setMsg('Uvoz otkazan. Podaci nisu promijenjeni.'); return; }
@@ -67,7 +73,7 @@ export default function Command({ onOpen }: { onOpen: (sceneId: string) => void 
           <button className="primary" onClick={() => runExport(exportBackup)}>Izvezi kopiju</button>
           <button onClick={() => file.current?.click()}>Obnovi iz kopije</button>
           <button onClick={() => runExport(exportMarkdown)}>Izvezi Markdown</button>
-          <input ref={file} aria-label="Uvezi sigurnosnu kopiju" type="file" accept="application/json" hidden onCancel={() => setMsg('Odabir datoteke otkazan. Podaci nisu promijenjeni.')} onChange={e => { restore(e.target.files?.[0]); e.target.value = ''; }} />
+          <input ref={file} aria-label="Uvezi sigurnosnu kopiju" type="file" accept="application/json" hidden onChange={e => { restore(e.target.files?.[0]); e.target.value = ''; }} />
         </fieldset>
         {msg && <p role="status">{msg}</p>}
         {busy && <div className="transfer-busy" role="alert">Pripremam ili vraćam kopiju… Ne zatvaraj aplikaciju.</div>}
