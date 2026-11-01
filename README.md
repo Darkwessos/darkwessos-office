@@ -1,31 +1,71 @@
-# DARKWESSOS — Living Story Office
+> **Android nastavak:** vidi [ANDROID-REPORT.md](ANDROID-REPORT.md). Koristi `npm ci`; zaključane zavisnosti su provjerene u GitHub Actionsu. Prihvat na stvarnom Android uređaju ostaje PENDING.
 
-**DARKWESSOS** je jedinstven kreativni prostor za razvoj pustolovnog svijeta, rukopisa, kontinuiteta i saradnje autorskog tima.
+# DARKWESSOS Office — MVP 0.2
 
-**KENO je autor i jedini konačni autoritet za kanon.** KATE je razvojna urednica i koordinatorica; LOREN, ATLAS, SCENAR i PERO djeluju u svojim stručnim radionicama. Radne ideje, testovi i historijski izvori ne postaju kanon automatski.
+Prvi sprint: Pisac (BlockNote), lokalna Dexie baza, tri špila, vizuelni prompt,
+postojeća ilustracija Atlasa i potpuni JSON izvoz/uvoz. Nema AI servisa, cloud
+sinhronizacije, Kompasa ni TEXINE automatizacije u ovoj verziji.
 
-## Aktuelni autoritativni dokumenti
+## Pokretanje
 
-1. [USTAV.md](USTAV.md) — vrhovne granice i pravila, preslikano iz `01_USTAV.md` master paketa 26.10.2026. bez redakcije.
-2. [CURRENT_FULL_ROOT.md](CURRENT_FULL_ROOT.md) — operativni CURRENT FULL ROOT (KENO-odobrena konsolidacija 25.10.2026.), preslikan iz `02_CURRENT_FULL_ROOT.md`.
-3. [ROOT_LITE.md](ROOT_LITE.md) — navigacijski pregled; nije novi kanonski autoritet.
-4. [SOURCE/04_SOURCE_MASTER.md](SOURCE/04_SOURCE_MASTER.md) — historijski SOURCE S, porijeklo, indeks i genealogija.
-5. [SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md](SOURCE/05_ADDENDUM_DOPUNE_IDEJE.md) — A/P, dopune, JUG i razvojne ideje; dokumentarna građa, ne novi CURRENT.
+Potreban je Node.js 24 i npm. U ovom folderu:
 
-**Hijerarhija:** USTAV SAGE → CURRENT FULL ROOT → ROOT-LITE kao navigacija → SOURCE kao porijeklo → HISTORY kao historija.
+```bash
+npm ci
+npm run dev
+```
 
-### Ostale radne cjeline
+Otvorite adresu koju ispiše Vite. Koristite istu adresu i isti preglednik kako
+biste pristupali istim lokalnim podacima. Ovo nije APK.
 
-- [AGENTS.md](AGENTS.md) — pravila za ljude i AI saradnike.
-- [SOURCE/izvori.md](SOURCE/izvori.md) — indeks SOURCE dokumenata.
-- [STORY/](STORY/) — rukopis i scene; nije promijenjen prilikom ove sinhronizacije.
-- [WORKSHOP/](WORKSHOP/) — razvojne radionice.
-- [CONTINUITY/](CONTINUITY/) — kontekst, neslaganja i trag odluka; nije kanonski autoritet.
-- [MIGRATION/](MIGRATION/) — historijski/pripremni importi; ne nadjačavaju CURRENT.
-- [docs/RADNI_TOK.md](docs/RADNI_TOK.md) — IDEA → TEST → PROPOSAL → KENO odluka → CANON.
+Za pripremljeni produkcijski build u `dist/` može se koristiti lokalni HTTP
+server (`python3 -m http.server 4173 --directory dist`). Ne otvarajte `index.html`
+preko file://. PWA instalacija/offline zahtijeva localhost ili HTTPS i dovršen
+prvi cache. Promjena hosta ili porta daje zasebnu lokalnu bazu.
 
-## Integritet i opseg
+## Tok prvog sprinta
 
-Pet glavnih dokumenata preslikano je bez sadržajnih izmjena iz jedinstvenog master paketa od **26.10.2026.** Preimenovanje u GitHub putanje ne mijenja sadržaj. Originalni binarni DOCX/ZIP arhivi, puna radionica i puni historijski sloj nisu dio ovog ciljanog usklađivanja.
+1. Otvori Pisac, napravi prizor i upiši tekst; pričekaj „Sačuvano lokalno”.
+2. Radionica: odaberi likove i situaciju, opciono mjesto.
+3. Sastavi vizuelni prompt i sačuvaj prijedlog.
+4. Zatvori i ponovo otvori istu adresu. Provjeri zapis, odabire, prompt i prijedlog.
+5. Više: Izvezi kopiju. Uvoz traži potvrdu i ZAMJENJUJE cijelo lokalno stanje
+   kopijom, uključujući scene, revizije, bilješke, izvore, kartice, prijedloge
+   i aktivni kontekst. Sačuvaj aktuelnu kopiju prije uvoza.
+6. Uvezi i provjeri istovjetnost sadržaja i konteksta.
 
-Neslaganje između projektne građe i važećeg kanona dokumentuje se i vraća KENU na odluku; ne popravlja se nagađanjem. Samo izričita KENO odluka može promijeniti kanon.
+Atlas koristi dostavljenu ilustraciju `darkwessos-atlas-v0.1.webp`. Početni
+markeri i sažeti profili kartica su DEMO / VISUAL ONLY, ne kanonska geografija.
+
+## Spremanje i kopija
+
+Svaki BlockNote događaj šalje snimak dokumenta u red upisa bez debounce timera.
+Promjena prostora i izvoz čekaju završetak upisa. Greška blokira dalje upise
+kako kasniji upis ne bi sakrio problem; „Ponovi spremanje” ponavlja ih redom.
+Indikator potvrđuje završenu transakciju, ne obećava zaštitu od brisanja podataka
+preglednika, kvara uređaja ili naglog prekida procesa usred nezavršenog upisa.
+
+Revizija čuva prethodni sadržaj prije prvog uređivanja scene u sesiji i zatim
+najviše jednom u deset minuta uređivanja. Izvorni BlockNote JSON se čuva u kopiji;
+Markdown izvoz je dodatna čitljiva kopija. Stare kopije formata v1 mogu se uvesti;
+ranija scena/quick-note iz lokalnog Officea migrira se pri prvom otvaranju.
+
+## Provjere
+
+```bash
+npm test
+npm run build
+```
+
+Nova provjera pohrane koristi fake-indexeddb: dokazuje logiku, ne ponašanje
+pravog preglednika. Devet izvornih testova pilota ostaje u `tests/legacy` s
+izolovanim izvornim engine/seed fajlovima. Ti fajlovi nisu dio runtime aplikacije.
+Nodeov test runner dodatno broji nadređeni test kao jednu stavku.
+
+Build i testovi su izvršeni: 10 novih pojedinačnih provjera pohrane/teksta i 9 izvornih domenskih testova prolaze. Nadređeni test dodatno se broji u Node izvještaju. Browser/Android tok, mobilni render, stvarno gašenje
+preglednika i offline ponovno otvaranje NISU potvrđeni. Zbog blokiranog browser
+pristupa sprint ostaje PENDING_BROWSER_ACCEPTANCE. Ne uvoditi novu glavnu
+funkcionalnost dok prethodni tok ne prođe u stvarnom pregledniku.
+
+Izvor: dostavljeni Office v0.1 i Atlas/Karte materijali. USTAV, ROOT, instalirani
+pluginovi i repozitoriji nisu mijenjani.

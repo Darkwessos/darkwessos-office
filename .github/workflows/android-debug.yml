@@ -1,0 +1,101 @@
+name: DARKWESSOS debug APK
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
+      - name: Install SDK for Capacitor 7
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'platform-tools'
+      - name: Resolve dependencies and lock
+        run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run android:prepare
+      - name: Optional existing debug signing key
+        env:
+          DEBUG_KEY: ${{ secrets.DARKWESSOS_DEBUG_KEYSTORE_BASE64 }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -n "$DEBUG_KEY" ]; then
+            mkdir -p "$HOME/.android"
+            printf '%s' "$DEBUG_KEY" | base64 --decode > "$HOME/.android/debug.keystore"
+            chmod 600 "$HOME/.android/debug.keystore"
+          else
+            key_id=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=darkwessos-debug-key&per_page=100" --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | last | .id // empty')
+            if [ -n "$key_id" ]; then
+              gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$key_id/zip" > "$RUNNER_TEMP/debug-key.zip"
+              mkdir -p "$HOME/.android"
+              unzip -o "$RUNNER_TEMP/debug-key.zip" -d "$HOME/.android"
+              chmod 600 "$HOME/.android/debug.keystore"
+            else
+              prior_apks=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=darkwessos-app-debug&per_page=1" --jq '.total_count')
+              if [ "$prior_apks" != '0' ]; then
+                echo '::error::Existing APK but no reusable signing key. Restore the original debug keystore secret before building an update.'
+                exit 1
+              fi
+              mkdir -p "$HOME/.android"
+              keytool -genkeypair -keystore "$HOME/.android/debug.keystore" -storepass android -keypass android -alias androiddebugkey -dname 'CN=Android Debug,O=Android,C=US' -keyalg RSA -keysize 2048 -validity 10000
+              chmod 600 "$HOME/.android/debug.keystore"
+            fi
+          fi
+      - name: Assemble embedded debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon \
+            -Pandroid.injected.signing.store.file="$HOME/.android/debug.keystore" \
+            -Pandroid.injected.signing.store.password=android \
+            -Pandroid.injected.signing.key.alias=androiddebugkey \
+            -Pandroid.injected.signing.key.password=android
+      - name: Verify APK signature matches preserved debug key
+        run: |
+          keytool -exportcert -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey -file "$RUNNER_TEMP/debug-cert.der"
+          expected=$(sha256sum "$RUNNER_TEMP/debug-cert.der" | cut -d ' ' -f 1)
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs android/app/build/outputs/apk/debug/app-debug.apk | tee apk-signature.txt
+          actual=$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' apk-signature.txt)
+          test "$expected" = "$actual"
+          sha256sum android/app/build/outputs/apk/debug/app-debug.apk > apk-sha256.txt
+          mkdir -p apk-artifact
+          cp android/app/build/outputs/apk/debug/app-debug.apk apk-signature.txt apk-sha256.txt apk-artifact/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: darkwessos-debug-key
+          path: ~/.android/debug.keystore
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+      - uses: actions/upload-artifact@v4
+        with:
+          name: darkwessos-app-debug
+          path: apk-artifact/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('package-lock.json') != ''
+        with:
+          name: resolved-dependency-lock
+          path: package-lock.json
+      - name: Package buildable source with resolved lock and Android project
+        run: tar --exclude='*/build' --exclude='*/.gradle' --exclude='*/local.properties' -czf darkwessos-android-source.tar.gz src public tests scripts android .github package.json package-lock.json capacitor.config.json index.html tsconfig.json vite.config.ts ANDROID-ACCEPTANCE.md ANDROID-REPORT.md README.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: darkwessos-android-source
+          path: darkwessos-android-source.tar.gz
+          if-no-files-found: error

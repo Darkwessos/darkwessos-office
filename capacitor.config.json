@@ -1,0 +1,12 @@
+{
+  "appId": "ba.darkwessos.office",
+  "appName": "DARKWESSOS Office",
+  "webDir": "dist",
+  "server": {
+    "hostname": "localhost",
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#0D1A2D"
+  }
+}
