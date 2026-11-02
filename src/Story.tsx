@@ -47,7 +47,7 @@ function Editor({ scene, context, onState }: { scene: Scene; context: ActiveCont
 
 export default function Story({ context }: { context: ActiveContext }) {
   const scenes = useLiveQuery(() => db.scenes.orderBy('createdAt').filter(s => !s.deletedAt).toArray(), []);
-  const activePlace = useLiveQuery(() => context.locationId ? db.cards.get(context.locationId) : Promise.resolve(undefined), [context.locationId]);
+  const activePlace = useLiveQuery(async () => context.locationId ? await db.cards.get(context.locationId) : undefined, [context.locationId]);
   const backedUp = useLiveQuery(async () => !!(await db.meta.get('lastBackup')), []);
   const id = context.sceneId;
   const setId = (sceneId: string | null) => updateContext({ sceneId }).catch(() => setState('GREŠKA spremanja konteksta')); 
