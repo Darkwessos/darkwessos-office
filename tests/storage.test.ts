@@ -6,6 +6,7 @@ import { seedCards } from '../src/cards';
 import { initializeContext, updateContext } from '../src/context';
 import { snapshot, importBackup, hashText, prepareBackup } from '../src/backupData';
 import { write, flush, retryFailed, storageState } from '../src/persistence';
+import { COVE_ID, discoverCove, openPlaceInStory } from '../src/atlasIdeas';
 
 // IndexedDB emulation: tests application logic, not browser/mobile durability.
 const store = new Map<string, string>();
@@ -70,4 +71,35 @@ test('storage acceptance: manuscript, active context and exact restore', async t
   assert.deepEqual((await snapshot()).scenes, p.scenes); assert.deepEqual((await snapshot()).revisions, p.revisions);
  });
  await db.delete();
+});
+
+
+test('Atlas pilot: one stable place, no overwrite, context survives close and backup', async () => {
+  await db.delete(); await db.open();
+  await initializeContext();
+  await discoverCove();
+  const found = (await db.cards.get(COVE_ID))!;
+  assert.equal(found.kind, 'mjesto');
+  assert.equal(found.status, 'TEST');
+  assert.equal(found.canonStatus, 'NON_CANON');
+  assert.equal(found.geometryState, 'SCHEMATIC');
+  assert.match(found.impulse ?? '', /\?/);
+  await db.cards.update(COVE_ID, { text: 'Autorska radna dopuna, nije kanon.' });
+  await discoverCove(); // repeat must not replace user's edits or duplicate an identity
+  assert.equal(await db.cards.where('id').equals(COVE_ID).count(), 1);
+  assert.equal((await db.cards.get(COVE_ID))!.text, 'Autorska radna dopuna, nije kanon.');
+  await openPlaceInStory(COVE_ID);
+  const ctx = (await db.meta.get('activeContext'))!.value;
+  assert.equal(ctx.page, 'STORY');
+  assert.equal(ctx.locationId, COVE_ID);
+  assert.equal(ctx.sceneId, null); // did not silently create or edit a manuscript scene
+  const before = canonical(await snapshot());
+  db.close(); await db.open();
+  assert.deepEqual(canonical(await snapshot()), before);
+  const backup = await makeFile(before);
+  await db.cards.update(COVE_ID, { text: 'Naknadna promjena' });
+  await importBackup(backup);
+  assert.deepEqual(canonical(await snapshot()), before);
+  await assert.rejects(openPlaceInStory('unknown-place'), /nije dostupno/);
+  await db.delete();
 });
