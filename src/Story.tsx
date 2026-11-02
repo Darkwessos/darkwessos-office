@@ -47,6 +47,7 @@ function Editor({ scene, context, onState }: { scene: Scene; context: ActiveCont
 
 export default function Story({ context }: { context: ActiveContext }) {
   const scenes = useLiveQuery(() => db.scenes.orderBy('createdAt').filter(s => !s.deletedAt).toArray(), []);
+  const activePlace = useLiveQuery(() => context.locationId ? db.cards.get(context.locationId) : Promise.resolve(undefined), [context.locationId]);
   const backedUp = useLiveQuery(async () => !!(await db.meta.get('lastBackup')), []);
   const id = context.sceneId;
   const setId = (sceneId: string | null) => updateContext({ sceneId }).catch(() => setState('GREŠKA spremanja konteksta')); 
@@ -68,6 +69,7 @@ export default function Story({ context }: { context: ActiveContext }) {
   if (!current) return (
     <div className="empty pad">
       <h2>Pisac</h2>
+      {activePlace && <p className="atlas-context-banner">Kontekst iz Atlasa: <strong>{activePlace.name}</strong> · {activePlace.canonStatus ?? 'VISUAL ONLY'}. Rukopis nije automatski izmijenjen.</p>}
       <p className="muted">Još nema prizora. Rukopis se čuva na ovom uređaju i radi bez interneta.</p>
       <button className="primary" onClick={create}>Počni prvi prizor</button>
     </div>
@@ -75,6 +77,7 @@ export default function Story({ context }: { context: ActiveContext }) {
 
   return (
     <div className="story">
+      {activePlace && <div className="atlas-context-banner" role="note">Atlas: <strong>{activePlace.name}</strong> · {activePlace.canonStatus ?? 'VISUAL ONLY'} · {activePlace.geometryState ?? 'SCHEMATIC'}<p>Radni kontekst, bez automatske izmjene rukopisa.</p><button type="button" onClick={() => void updateContext({ page: 'ATLAS' }).catch(() => setState('Greška povratka u Atlas'))}>Vrati se na mapu</button></div>}
       <div className="bar">
         <select value={current.id} onChange={e => setId(e.target.value)} aria-label="Prizor">
           {scenes.map(s => <option key={s.id} value={s.id}>{s.title || 'Bez naslova'}</option>)}
