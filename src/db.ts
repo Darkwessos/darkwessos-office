@@ -21,7 +21,10 @@ export interface Revision { id: string; sceneId: string; title: string; content:
 export interface Source { id: string; projectId: string; name: string; text: string; sha256: string; importedAt: number }
 export interface Meta { key: string; value: any }
 
-export interface Card { id: string; kind: string; name: string; text: string; x?: number; y?: number }
+export interface Card { id: string; kind: string; name: string; text: string; x?: number; y?: number;
+  status?: 'TEST'; canonStatus?: 'NON_CANON'; geometryState?: 'SCHEMATIC';
+  sourceNote?: string; impulse?: string;
+}
 export interface VisualResult { id: string; prompt: string; characterIds: string[]; situationId: string; locationId: string | null; status: 'TEST'; createdAt: number }
 
 class OfficeDB extends Dexie {
