@@ -67,3 +67,4 @@ export default function Atlas({ context }: { context: ActiveContext }) {
       </div>
     </div>
   </section>;
+}
