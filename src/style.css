@@ -287,3 +287,39 @@ html, body, #root { min-height: 100%; }
 .content { overscroll-behavior: contain; scroll-padding-bottom: 80px; }
 input, textarea, [contenteditable] { scroll-margin-block: 70px; }
 .transfer-busy { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 30px; background: #0D1A2Df5; text-align: center; }
+
+/* CRVENI BROD — autorski cockpit. Existing editor, cards, Atlas and Dexie stay intact. */
+.cockpit { max-width: 1080px; margin: 0 auto; padding: clamp(8px, 2vw, 30px); }
+.cockpit-hero {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  justify-content: center; min-height: min(55vh, 480px); padding: clamp(22px, 5vw, 56px);
+  background: linear-gradient(100deg, rgba(13,26,45,.95) 0%, rgba(13,26,45,.83) 57%, rgba(13,26,45,.35) 100%),
+              url('/atlas.webp') center center / cover;
+  border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
+}
+.cockpit-eyebrow { margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: .14em; color: var(--gold-light); }
+.cockpit-hero h1 { margin: 0; max-width: 650px; font: 500 clamp(32px, 5.3vw, 58px)/1.14 Georgia, serif; color: var(--text); }
+.cockpit-description { max-width: 500px; margin: 16px 0 0; font-size: 16px; color: var(--text-secondary); }
+.cockpit-last { margin: 28px 0 12px; font-size: 13px; color: var(--gold-light); }
+.cockpit-resume { min-height: 50px; padding: 12px 24px; font-size: 16px; }
+.cockpit-visual-note { margin: 24px 0 0; font-size: 10px; color: var(--text-secondary); }
+.cockpit-doors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.cockpit-door { display: flex; flex-direction: column; align-items: flex-start; min-height: 104px; text-align: left;
+  padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.cockpit-door:hover, .cockpit-door:focus-visible { border-color: var(--gold); background: var(--card-elevated); }
+.cockpit-door strong { font: 500 20px Georgia, serif; color: var(--text); }
+.cockpit-door span { margin-top: 6px; color: var(--text-muted); font-size: 12px; }
+.cockpit-motto { margin: 22px 0 0; text-align: center; color: var(--text-muted); font-size: 12px; letter-spacing: .08em; }
+.cockpit-home-button { border: 0; border-radius: 4px; padding: 4px 0; background: transparent; color: var(--gold-light);
+  font: inherit; font-weight: 700; letter-spacing: inherit; text-transform: uppercase; }
+.cockpit-home-button:hover { text-decoration: underline; }
+@media (max-width: 800px) {
+  .cockpit-hero { min-height: 360px; padding: 24px; }
+  .cockpit-doors { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cockpit-door { min-height: 92px; padding: 14px; }
+}
+@media (max-width: 420px) {
+  .cockpit-hero { min-height: 340px; background-position: 55% center; }
+  .cockpit-description { font-size: 14px; }
+  .cockpit-door strong { font-size: 18px; }
+}

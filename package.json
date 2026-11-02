@@ -8,7 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "node --import tsx --test --test-isolation=none tests/storage.test.ts && node --test --test-isolation=none tests/legacy/engine.test.cjs && npm run test:native",
+    "test": "node --import tsx --test --test-isolation=none tests/storage.test.ts && node --import tsx --test --test-isolation=none tests/cockpit.test.ts && node --test --test-isolation=none tests/legacy/engine.test.cjs && npm run test:native",
     "build:native": "tsc --noEmit && vite build --mode native",
     "android:prepare": "npm run build:native && node scripts/prepare-android.mjs",
     "android:debug": "npm run android:prepare && cd android && ./gradlew assembleDebug",
