@@ -287,3 +287,13 @@ html, body, #root { min-height: 100%; }
 .content { overscroll-behavior: contain; scroll-padding-bottom: 80px; }
 input, textarea, [contenteditable] { scroll-margin-block: 70px; }
 .transfer-busy { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 30px; background: #0D1A2Df5; text-align: center; }
+
+/* ŽIVA MAPA — first creative ATLAS pilot: no extra map library or database. */
+.atlas-layout { display:grid; grid-template-columns: minmax(0,1.5fr) minmax(240px,1fr); gap:16px; align-items:start; margin-top:18px; }
+.atlas-layout .atlas-map { width:100%; margin:0; }
+.atlas-side .card { margin:0 0 12px; }
+.atlas-side .card p { margin:8px 0; }
+.atlas-impulse { border-left:3px solid var(--gold); padding:8px 12px; background:var(--card-elevated); border-radius:6px; }
+.atlas-context-banner { border:1px solid var(--border); border-left:3px solid var(--blue-accent); background:var(--card); border-radius:8px; padding:12px; margin-bottom:14px; }
+.atlas-context-banner p { margin:6px 0; }
+@media(max-width:740px) { .atlas-layout { grid-template-columns:minmax(0,1fr); } .atlas-layout .atlas-map { margin:0; } }
